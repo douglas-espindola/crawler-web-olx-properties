@@ -11,7 +11,8 @@
     {
         public function getProperties(): JsonResponse
         {
-            $result = OlxScraperService::getResultSearch();
+            $params = OlxScraperService::filters();
+            $result = OlxScraperService::getResultSearch($params);
 
             if (empty($result)) {
                 return response()->json(['message' => 'No properties found'], response::HTTP_NOT_FOUND);
