@@ -7,9 +7,9 @@
 
     class OlxScraperService
     {
-        public static function getResultSearch(): array
+        public static function getResultSearch($params): array
         {
-            $result = OlxRepository::getScrapProperties();
+            $result = OlxRepository::getScrapProperties($params);
 
             if ($result->failed()) {
                 logs()->debug("Falha na conexão com o site da OLX!", ['status' => $result->status(), 'message' => $result->json()]);
@@ -52,5 +52,9 @@
 
             logs()->info("Json decodificado com sucesso!", ['status' => $result->status(), 'message' => $result->json()]);
             return $json['pageProps'][$key];
+        }
+        public static function filters() : array
+        {
+            return OlxRepository::params();
         }
     }
