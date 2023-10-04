@@ -17,6 +17,8 @@
 
     Route::prefix('/pa')->group(function () {
         Route::get('/olx-properties', [OlxCrawlersController::class, 'getProperties'])->name('getProperties');
+        Route::get('/download-properties',[OlxCrawlersController::class, 'downloadProperties'])->name('downloadProperties');
+
     });
 
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
