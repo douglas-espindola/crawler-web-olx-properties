@@ -4,6 +4,8 @@
     namespace App\Services\Olx;
 
     use App\Repositories\Olx\OlxRepository;
+    use Maatwebsite\Excel\Facades\Excel;
+    use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
     class OlxScraperService
     {
@@ -53,8 +55,14 @@
             logs()->info("Json decodificado com sucesso!", ['status' => $result->status(), 'message' => $result->json()]);
             return $json['pageProps'][$key];
         }
+
         public static function filters() : array
         {
             return OlxRepository::params();
+        }
+
+        public static function exportExcel($result, $fileName): BinaryFileResponse
+        {
+            return Excel::download(new PropertiesExport($result), $fileName);
         }
     }
