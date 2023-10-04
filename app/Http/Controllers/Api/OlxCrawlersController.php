@@ -19,4 +19,17 @@
             }
             return response()->json([$result, response::HTTP_OK]);
         }
+
+        public function downloadProperties()
+        {
+            $params = OlxScraperService::filters();
+            $result = OlxScraperService::getResultSearch($params);
+            $fileName = 'imoveis.xlsx';
+
+            if (empty($result)) {
+                return response()->json(['error' => 'Nenhum imóvel encontrado para exportar.'], response::HTTP_NOT_FOUND);
+            }
+
+            return  OlxScraperService::exportExcel($result, $fileName);
+        }
     }
